@@ -1,5 +1,5 @@
 module.exports = function check(str, bracketsConfig) {
-  const stackFrom = [];
+  const stack = [];
   const bracketForPair = {};
   const openBracket = [];
 
@@ -13,21 +13,21 @@ module.exports = function check(str, bracketsConfig) {
   for (let i = 0; i < str.length; i++) {
     let currentElement = str[i];
     if (openBracket.includes(currentElement)) {
-      stackFrom.push(currentElement)
-      if ((stackFrom.includes('|') && currentElement === "|")) {
-        stackFrom.pop();
+      stack.push(currentElement)
+      if ((stack.includes('|') && currentElement === "|")) {
+        stack.pop();
       }
     } else {
-      if (stackFrom.length === 0) {
+      if (stack.length === 0) {
         return false;
       }
-      let topElementFromStack = stackFrom[stackFrom.length - 1]
-      if (bracketForPair[currentElement] === topElementFromStack) {
-        stackFrom.pop();
+      let topElement = stack[stack.length - 1]
+      if (bracketForPair[currentElement] === topElement) {
+        stack.pop();
       } else {
-        return false
+        return str.length === 0;
       }
     }
 
-  } return stackFrom.length === 0;
+  } return stack.length === 0;
 }
